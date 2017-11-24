@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => SpendTracker\User::class,
+            'model' => \SpendTracker\Models\User::class,
         ],
 
         // 'users' => [

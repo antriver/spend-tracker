@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => SpendTracker\User::class,
+        'model' => \SpendTracker\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

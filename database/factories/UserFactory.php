@@ -13,7 +13,8 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(SpendTracker\User::class, function (Faker $faker) {
+$factory->define(
+    \SpendTracker\Models\User::class, function (Faker $faker) {
     static $password;
 
     return [
