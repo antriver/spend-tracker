@@ -15,6 +15,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Transactions</a></li>
                 <li><a href="/categories">Categories</a></li>
+                <li><a href="/charts">Charts</a></li>
                 <li><a href="/import">Import</a></li>
             </ul>
 

@@ -1,54 +1,56 @@
 @extends('base.main')
 
 @section('body')
+    <script src="https://unpkg.com/frappe-charts@0.0.7/dist/frappe-charts.min.iife.js"></script>
     <div class="container">
         <h1>Charts</h1>
 
-        <h2>Categories Per Week</h2>
-
+        <div id="heatmap" style="margin:auto; text-align: center;"></div>
         <script>
-             // Javascript
-              var data = <?=json_encode($categoriesPerWeekData)?>;/*{
-                labels: ["12am-3am", "3am-6am", "6am-9am", "9am-12pm",
-                  "12pm-3pm", "3pm-6pm", "6pm-9pm", "9pm-12am"],
-
-                datasets: [
-                  {
-                    title: "Some Data",
-                    values: [25, 40, 30, 35, 8, 52, 17, -4]
-                  },
-                  {
-                    title: "Another Set",
-                    values: [25, 50, -10, 15, 18, 32, 27, 14]
-                  },
-                  {
-                    title: "Yet Another",
-                    values: [15, 20, -3, -15, 58, 12, -17, 37]
-                  }
-                ]
-              };*/
-
-              var chart = new Chart({
-                parent: "#chart", // or a DOM element
-                title: "My Awesome Chart",
-                data: data,
-                type: 'bar', // or 'line', 'scatter', 'pie', 'percentage'
-                height: 250,
-
-                colors: ['#7cd6fd', 'violet', 'blue'],
-                // hex-codes or these preset colors;
-                // defaults (in order):
-                // ['light-blue', 'blue', 'violet', 'red',
-                // 'orange', 'yellow', 'green', 'light-green',
-                // 'purple', 'magenta', 'grey', 'dark-grey']
-
-                format_tooltip_x: d => (d + '').toUpperCase(),
-                format_tooltip_y: d => d + ' pts'
-              });
+            var heatmap = new Chart({
+                parent: "#heatmap",
+                type: 'heatmap',
+                height: 115,
+                data: <?=json_encode($amountPerDayChartData)?>,
+                discrete_domains: 0,
+                legend_colors: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127'],
+            });
+        </script>
+    
+        <div id="chart"></div>
+        <script>
+            var categoryPerWeekChartData = <?=json_encode($categoryPerWeekChartData)?>;
+            var chart = new Chart({
+                parent: "#chart",
+                title: "Categories Per Week",
+                data: categoryPerWeekChartData,
+                type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
+                height: 500,
+            });
         </script>
 
-        <p>
-            <a class="btn btn-block btn-default btn-lg" href="/charts/categories-per-week">Categories Per Week</a>
-        </p>
+        <?php
+        foreach ($categoryPerWeekChartData['datasets'] as $i => $dataset) {
+        ?>
+        <div id="chart-cat-<?=$i?>"></div>
+        <script>
+            new Chart({
+                parent: "#chart-cat-<?=$i?>",
+                title: "<?=$dataset['title']?>",
+                data: {
+                    labels: categoryPerWeekChartData.labels,
+                    datasets: [
+                        <?=json_encode($dataset)?>
+                    ]
+                },
+                type: 'bar',
+                height: 500,
+                heatline: 1
+            });
+        </script>
+
+        <?php
+        }
+        ?>
     </div>
 @endsection

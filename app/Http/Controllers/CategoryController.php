@@ -11,7 +11,7 @@ class CategoryController extends AbstractController
 {
     public function index()
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::where('selectable', 1)->orderBy('name')->get();
 
         return View::make(
             'categories',
