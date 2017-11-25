@@ -12,7 +12,7 @@
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Merchant</th>
-                    <th>Category</th>
+                    <th style="width:200px;">Category</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,16 +22,22 @@
                     <td>{{ $transaction->date->toDateString() }}</td>
                     <td>{{ $transaction->description }}</td>
                     <td>&pound;{{ number_format($transaction->amount, 2) }}</td>
-                    <td>{{ $transaction->merchant ? $transaction->merchant->name : '' }}</td>
+                    <td class="merchant-cell" data-merchant-id="{{ $transaction->merchant->id }}">
+                        <strong>[{{ $transaction->merchant ? $transaction->merchant->id : '' }}]</strong>
+                        <span class="merchant-name">{{ $transaction->merchant ? $transaction->merchant->name : '' }}</span>
+                        <a class="btn btn-sm btn-default edit-merchant-name"><i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
                     <td>
                         @if ($transaction->merchant)
-
-                            {{ $transaction->merchant->category ? $transaction->merchant->category->name : '' }}
-
-                            <select class="form-control"
+                            <select class="form-control category-selector"
                                     id="category-selector"
                                     data-merchant-id="{{ $transaction->merchant->id }}">
-                                <option>Test</option>
+                                <option <?=(empty($transaction->merchant->categoryId) ? 'selected' : '')?>></option>
+                                @foreach ($categories as $category)
+                                    <option value="<?=$category->id?>" <?=($transaction->merchant->categoryId == $category->id ? 'selected' : '')?>>
+                                        {{ $category->name }} [{{ $category->id }}]
+                                    </option>
+                                @endforeach
                             </select>
                         @endif
                     </td>

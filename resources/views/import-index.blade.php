@@ -2,14 +2,14 @@
 
 @section('body')
     <div class="container">
-        <h2>Import</h2>
+        <h1>Import</h1>
 
-        <h3>Cards</h3>
-        <ul>
-            @foreach($cards as $card)
-            <li>
-                <a href="/import/{{ $card->id }}">{{ $card->name }}</a></li>
-            @endforeach
-        </ul>
+        <h2>Cards</h2>
+
+        @foreach($cards as $card)
+        <p>
+            <a class="btn btn-block btn-default btn-lg" href="/import/{{ $card->id }}">{{ $card->name }}</a>
+        </p>
+        @endforeach
     </div>
 @endsection

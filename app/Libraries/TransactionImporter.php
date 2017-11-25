@@ -56,13 +56,13 @@ class TransactionImporter
         }
     }
 
-    protected function saveTransaction(Transaction $transaction)
+    public function saveTransaction(Transaction $transaction)
     {
         return $this->db->affectingStatement(
             "INSERT INTO transactions
             (cardId, date, description, amount, merchantId, raw, hash)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE hash = VALUES(hash)",
+            ON DUPLICATE KEY UPDATE merchantId = VALUES(merchantId)",
             [
                 $transaction->cardId,
                 $transaction->date,
@@ -75,14 +75,14 @@ class TransactionImporter
         );
     }
 
-    protected function getMerchant(string $description): ?Merchant
+    public function getMerchant(string $description): ?Merchant
     {
         $query = "SELECT m.*
             FROM merchants m
             LEFT JOIN merchant_aliases ma ON ma.merchantId = m.id
             WHERE LOCATE(m.name, ?) OR LOCATE(ma.name, ?)
             GROUP BY m.id
-            ORDER BY auto
+            ORDER BY auto ASC
             LIMIT 1";
 
         $merchant = Merchant::fromQuery(

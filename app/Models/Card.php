@@ -7,11 +7,13 @@ namespace SpendTracker\Models;
  *
  * @property int $id
  * @property string|null $name
+ * @property string|null $shortName
  * @property string|null $provider
  * @property-read \Illuminate\Database\Eloquent\Collection|\SpendTracker\Models\Transaction[] $transactions
  * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Card whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Card whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Card whereProvider($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Card whereShortName($value)
  * @mixin \Eloquent
  */
 class Card extends AbstractModel

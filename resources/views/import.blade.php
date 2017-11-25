@@ -2,9 +2,9 @@
 
 @section('body')
     <div class="container">
-        <h2>Import</h2>
+        <h1>Import</h1>
 
-        <h3>Import For <em>{{ $card->name }}</em></h3>
+        <h2>Import For <em>{{ $card->name }}</em></h2>
 
         <form action="/import/{{ $card->id }}" method="post" class="form" enctype="multipart/form-data">
             {{ csrf_field() }}
@@ -17,7 +17,7 @@
                        multiple />
             </div>
 
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-lg btn-primary" type="submit">
                 Submit
             </button>
 

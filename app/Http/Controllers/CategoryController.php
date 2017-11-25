@@ -7,30 +7,28 @@ use SpendTracker\Models\Category;
 use SpendTracker\Models\Transaction;
 use View;
 
-class RootController extends AbstractController
+class CategoryController extends AbstractController
 {
     public function index()
     {
-        $categories = Category::where('selectable', 1)->orderBy('name')->get();
-        $transactions = Transaction::with('card', 'merchant', 'merchant.category')->orderBy('date')->get();
+        $categories = Category::orderBy('name')->get();
 
         return View::make(
-            'index',
+            'categories',
             [
                 'categories' => $categories,
-                'transactions' => $transactions,
             ]
         );
     }
 
-    public function uncategorised()
+    public function show(Category $category)
     {
         $categories = Category::where('selectable', 1)->orderBy('name')->get();
         $transactions = Transaction::with('card', 'merchant', 'merchant.category')
             ->whereHas(
                 'merchant',
-                function ($q) {
-                    $q->whereNull('categoryId');
+                function ($q) use ($category) {
+                    $q->where('categoryId', $category->id);
                 }
             )
             ->orderBy('date')->get();

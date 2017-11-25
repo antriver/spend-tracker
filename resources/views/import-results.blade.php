@@ -2,12 +2,12 @@
 
 @section('body')
     <div class="container">
-        <h2>Import</h2>
+        <h1>Import</h1>
 
-        <h3>Import For <em>{{ $card->name }}</em></h3>
+        <h2>Import For <em>{{ $card->name }}</em></h2>
 
         @foreach($results as $filename => $result)
-            <h4>{{ $filename }}</h4>
+            <h3>{{ $filename }}</h3>
             {!! $result !!}
         @endforeach
     </div>

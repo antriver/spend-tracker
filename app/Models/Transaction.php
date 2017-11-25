@@ -7,7 +7,7 @@ namespace SpendTracker\Models;
  *
  * @property int $id
  * @property int|null $cardId
- * @property string $date
+ * @property \Carbon\Carbon $date
  * @property string|null $description
  * @property float $amount
  * @property int|null $merchantId
@@ -15,6 +15,7 @@ namespace SpendTracker\Models;
  * @property string|null $hash
  * @property \Carbon\Carbon $createdAt
  * @property \Carbon\Carbon|null $updatedAt
+ * @property-read \SpendTracker\Models\Card|null $card
  * @property-read \SpendTracker\Models\Merchant|null $merchant
  * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Transaction whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\SpendTracker\Models\Transaction whereCardId($value)
