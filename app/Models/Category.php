@@ -18,6 +18,11 @@ class Category extends AbstractModel
 {
     public $table = 'categories';
 
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parentCategoryId', 'id');
+    }
+
     public function merchants()
     {
         return $this->hasMany(Merchant::class, 'categoryId', 'id');

@@ -1,3 +1,21 @@
 body {
 
 }
+
+.chart-container > .title {
+    font-size: 20px !important;
+}
+
+.index-categories .btn {
+    margin: 3px;
+}
+
+.summary-table-container {
+    overflow: auto;
+}
+
+.summary-table td,
+.summary-table th {
+    vertical-align: middle !important;
+    min-width: 150px;
+}

@@ -1,49 +1,50 @@
 @extends('base.main')
 
 @section('body')
-    <div class="container">
-        <h1>Transactions</h1>
+    <div class="container-fluid">
 
-        <table class="table table-striped table-hover">
-            <thead>
+        <div class="summary-table-container">
+            <table class="table table-striped table-hover summary-table">
+                <thead>
                 <tr>
-                    <th>Card</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Merchant</th>
-                    <th style="width:200px;">Category</th>
+                    <th>Month</th>
+                    <th>Month Total</th>
+                    @foreach ($categories as $category)
+                        <th>{{ $category->name }}</th>
+                    @endforeach
                 </tr>
-            </thead>
-            <tbody>
-            @foreach($transactions as $transaction)
-                <tr data-if="{{ $transaction->id }}">
-                    <td>{{ $transaction->card->shortName }}</td>
-                    <td>{{ $transaction->date->toDateString() }}</td>
-                    <td>{{ $transaction->description }}</td>
-                    <td>&pound;{{ number_format($transaction->amount, 2) }}</td>
-                    <td class="merchant-cell" data-merchant-id="{{ $transaction->merchant->id }}">
-                        <strong>[{{ $transaction->merchant ? $transaction->merchant->id : '' }}]</strong>
-                        <span class="merchant-name">{{ $transaction->merchant ? $transaction->merchant->name : '' }}</span>
-                        <a class="btn btn-sm btn-default edit-merchant-name"><i class="glyphicon glyphicon-edit"></i></a>
-                    </td>
-                    <td>
-                        @if ($transaction->merchant)
-                            <select class="form-control category-selector"
-                                    id="category-selector"
-                                    data-merchant-id="{{ $transaction->merchant->id }}">
-                                <option <?=(empty($transaction->merchant->categoryId) ? 'selected' : '')?>></option>
-                                @foreach ($categories as $category)
-                                    <option value="<?=$category->id?>" <?=($transaction->merchant->categoryId == $category->id ? 'selected' : '')?>>
-                                        {{ $category->name }} [{{ $category->id }}]
-                                    </option>
-                                @endforeach
-                            </select>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach ($displayMonths as $month => $monthName)
+                    <tr>
+                        <td>{{ $monthName }}</td>
+                        <td>{{ isset($months[$month]) ? '£'.number_format($months[$month]['total'], 2) : '' }}</td>
+                        @foreach ($categories as $category)
+                            <td>
+                                <a href="/transactions/?category={{ $category->id }}&date={{ $month }}">
+                                    {{ !empty($months[$month][$category->id]) ? '£'.number_format($months[$month][$category->id], 2) : '' }}
+                                </a>
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+                </tbody>
+                <tfoot>
+                @foreach ($averages as $length => $data)
+                    <tr>
+                        <td>{{ $length }} Month Average</td>
+                        <td>{{ '£'.number_format($data['total'], 2) }}</td>
+                        @foreach ($categories as $category)
+                            <td>
+                                {{ !empty($data[$category->id]) ? '£'.number_format($data[$category->id], 2) : '' }}
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+
+                </tfoot>
+            </table>
+        </div>
+
     </div>
 @endsection

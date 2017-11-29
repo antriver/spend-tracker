@@ -13,10 +13,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/">Transactions</a></li>
+                <li><a href="/transactions">Transactions</a></li>
                 <li><a href="/categories">Categories</a></li>
                 <li><a href="/charts">Charts</a></li>
-                <li><a href="/import">Import</a></li>
+                <li><a href="/cards">Cards</a></li>
             </ul>
 
         </div><!-- /.navbar-collapse -->

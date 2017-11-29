@@ -2,6 +2,7 @@
 
 namespace SpendTracker\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SpendTracker\Http\Controllers\Base\AbstractController;
 use SpendTracker\Libraries\TransactionFactory;
@@ -13,18 +14,6 @@ use View;
 
 class ImportController extends AbstractController
 {
-    public function index()
-    {
-        $cards = Card::orderBy('name')->get();
-
-        return View::make(
-            'import-index',
-            [
-                'cards' => $cards,
-            ]
-        );
-    }
-
     public function getImport(Card $card)
     {
         return View::make(
@@ -60,6 +49,9 @@ class ImportController extends AbstractController
                 ob_end_clean();
 
                 $results[$file->getClientOriginalName()] = $result;
+
+                $card->lastImportAt = new Carbon();
+                $card->save();
             }
         }
 

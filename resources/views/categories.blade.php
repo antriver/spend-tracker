@@ -6,7 +6,7 @@
 
         @foreach($categories as $category)
         <p>
-            <a class="btn btn-block btn-default btn-lg" href="/categories/{{ $category->id }}">{{ $category->name }}</a>
+            <a class="btn btn-block btn-default btn-lg" href="/transactions?category={{ $category->id }}">{{ $category->name }}</a>
         </p>
         @endforeach
     </div>

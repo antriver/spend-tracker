@@ -13,11 +13,11 @@ class ChartsController extends AbstractController
 {
     public function index(Request $request)
     {
-        $period = 'week';
-        $sqlDateFormat = '%Y-%V';
-        if ($request->get('period') === 'month') {
-            $period = 'month';
-            $sqlDateFormat = '%Y-%m';
+        $period = 'month';
+        $sqlDateFormat = '%Y-%m';
+        if ($request->get('period') === 'week') {
+            $period = 'week';
+            $sqlDateFormat = '%Y-%V';
         }
 
         // Get all categories.
